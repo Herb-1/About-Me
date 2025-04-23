@@ -3,18 +3,46 @@ import React, { useState, useEffect } from "react";
 const App: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Ngăn chặn menu chuột phải trên ảnh
+  // Ngăn chặn menu chuột phải và các hành động copy/tải ảnh
   useEffect(() => {
-    const preventRightClick = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).tagName === 'IMG') {
+    const preventImageActions = (e: Event) => {
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'IMG') {
         e.preventDefault();
+        return false;
       }
     };
 
-    document.addEventListener('contextmenu', preventRightClick);
+    // Ngăn chặn menu chuột phải
+    document.addEventListener('contextmenu', preventImageActions);
+    
+    // Ngăn chặn kéo thả ảnh
+    document.addEventListener('dragstart', preventImageActions);
+    
+    // Ngăn chặn copy ảnh
+    document.addEventListener('copy', preventImageActions);
+    
+    // Ngăn chặn phím tắt copy
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'C')) {
+        const target = e.target as HTMLElement;
+        if (target.tagName === 'IMG') {
+          e.preventDefault();
+          return false;
+        }
+      }
+    });
+
+    // Thêm thuộc tính draggable="false" cho tất cả ảnh
+    const images = document.getElementsByTagName('img');
+    for (let i = 0; i < images.length; i++) {
+      images[i].setAttribute('draggable', 'false');
+    }
     
     return () => {
-      document.removeEventListener('contextmenu', preventRightClick);
+      document.removeEventListener('contextmenu', preventImageActions);
+      document.removeEventListener('dragstart', preventImageActions);
+      document.removeEventListener('copy', preventImageActions);
     };
   }, []);
 
@@ -58,6 +86,8 @@ const App: React.FC = () => {
             src="/images/avatar2.jpg"
             alt="Nguyễn Thị Hà"
             className="w-40 h-40 rounded-full mx-auto mb-4 border-4 border-white shadow-lg hover:scale-105 transition-transform duration-300 object-cover"
+            draggable="false"
+            onContextMenu={(e) => e.preventDefault()}
           />
           <h1 className="text-5xl md:text-6xl font-bold mb-2 text-white font-sans">Nguyễn Thị Hà</h1>
         </div>
@@ -120,6 +150,8 @@ const App: React.FC = () => {
                         src={image}
                         alt={`${exp.position} ${imageIdx + 1}`}
                         className="w-full h-48 object-cover rounded-lg shadow hover:scale-105 transition-transform duration-300"
+                        draggable="false"
+                        onContextMenu={(e) => e.preventDefault()}
                       />
                     ))}
                   </div>
