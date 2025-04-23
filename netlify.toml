@@ -1,6 +1,6 @@
 [build]
   base = "my-app"
-  command = "npm run build"
+  command = "npm install && npm run build"
   publish = "build"
 
 [[redirects]]
