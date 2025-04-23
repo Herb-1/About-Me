@@ -101,7 +101,7 @@ const App: React.FC = () => {
             <strong>Họ và tên:</strong> Nguyễn Thị Hà
           </p>
           <p>
-            <strong>Ngày/Tháng/Năm sinh:</strong> 14/09/2002
+            <strong>Ngày/Tháng/Năm sinh:</strong> 14/09/2005
           </p>
           <p>
             <strong>Chiều Cao:</strong> 1m63
