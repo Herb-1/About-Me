@@ -101,15 +101,6 @@ const App: React.FC = () => {
             <strong>Họ và tên:</strong> Nguyễn Thị Hà
           </p>
           <p>
-            <strong>Ngày/Tháng/Năm sinh:</strong> 14/09/2005
-          </p>
-          <p>
-            <strong>Chiều Cao:</strong> 1m63
-          </p>
-          <p>
-            <strong>Cân Nặng:</strong> 50kg
-          </p>
-          <p>
             <strong>STK:</strong> 0866492365 MB bank
           </p>
           <p>
